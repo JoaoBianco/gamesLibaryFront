@@ -9,6 +9,7 @@ import {
   faXbox,
 } from "@fortawesome/free-brands-svg-icons"
 import {
+  faCircleArrowLeft,
   faGamepad,
   faStar,
   IconDefinition,
@@ -98,6 +99,12 @@ export default function Game() {
   return (
     <>
       <div className="relative">
+        <FontAwesomeIcon
+          className="absolute z-[2] top-4 left-4 rounded-full cursor-pointer text-zinc-900"
+          size="2x"
+          icon={faCircleArrowLeft}
+          onClick={() => router.push("/")}
+        />
         <Image
           src={game.background_image}
           alt={game.name}
