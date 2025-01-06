@@ -1,5 +1,6 @@
 "use client"
 
+import Spinner from "@/app/(components)/spinner/Spinner"
 import { RawgGame } from "@/app/shared/models/game.model"
 import metacriticImg from "@/public/metacritic.png"
 import switchImg from "@/public/switch.png"
@@ -93,18 +94,22 @@ export default function Game() {
   }
 
   if (!game) {
-    return <div>Loading...</div>
+    return <Spinner />
   }
 
   return (
     <>
       <div className="relative">
-        <FontAwesomeIcon
-          className="absolute z-[2] top-4 left-4 rounded-full cursor-pointer text-zinc-900"
-          size="2x"
-          icon={faCircleArrowLeft}
+        <div
+          className="absolute z-[2] top-0 left-0 cursor-pointer p-4 bg-black/30 rounded-br-lg hover:shadow-md transition-shadow"
           onClick={() => router.push("/")}
-        />
+        >
+          <FontAwesomeIcon
+            className="text-white rounded-full"
+            size="2x"
+            icon={faCircleArrowLeft}
+          />
+        </div>
         <Image
           src={game.background_image}
           alt={game.name}
@@ -136,7 +141,7 @@ export default function Game() {
             </div>
           </div>
           <div className="flex gap-2 items-center justify-center">
-            {plataforms.map((plataform) => {
+            {plataforms?.map((plataform) => {
               return (
                 <div
                   key={plataform.name}
