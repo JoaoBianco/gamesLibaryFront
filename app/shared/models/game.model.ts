@@ -117,3 +117,26 @@ interface Tag {
   games_count: number
   image_background: string
 }
+
+const Status = {
+  WANT_TO_PLAY: "WANT_TO_PLAY",
+  PLAYING: "PLAYING",
+  COMPLETED: "COMPLETED",
+  DROPPED: "DROPPED",
+}
+
+type Status = (typeof Status)[keyof typeof Status]
+
+export interface Game {
+  id: string
+  rawgId: number
+  name: string
+  imageUrl: string
+  wishlist: boolean
+  favorite: boolean
+  acquired: boolean
+  inLibrary: boolean
+  status: Status
+  createdAt: Date
+  updatedAt: Date
+}

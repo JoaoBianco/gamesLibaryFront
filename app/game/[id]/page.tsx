@@ -28,7 +28,7 @@ type Plataform = {
 }
 
 export default function Game() {
-  const id = useParams().id
+  let id = useParams().id
   const router = useRouter()
 
   const [game, setGame] = useState<RawgGame>()
@@ -40,14 +40,25 @@ export default function Game() {
       return
     }
 
-    fetch(`http://localhost:3000/api/rawgGames/${id}`).then((game) => {
-      game.json().then((game) => setGame(game))
-    })
+    if (typeof id === "string") {
+      fetch(`http://localhost:3000/api/game/${id}`).then((game) => {
+        game.json().then((game) => fetchGameInfos(game.rawgId))
+      })
+      return
+    }
+
+    fetchGameInfos(Number(id))
   }, [id])
 
   useEffect(() => {
     buildPlataforms()
   }, [game])
+
+  function fetchGameInfos(id: number) {
+    fetch(`http://localhost:3000/api/rawgGames/${id}`).then((game) => {
+      game.json().then((game) => setGame(game))
+    })
+  }
 
   function buildPlataforms() {
     if (!game) {
