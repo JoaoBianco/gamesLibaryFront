@@ -1,7 +1,7 @@
 "use client"
 
 import GameCard from "@/app/game/(components)/GameCard"
-import { RawgGame } from "@/app/shared/models/game.model"
+import { Game } from "@/app/shared/models/game.model"
 import { debounce } from "lodash"
 import { Dispatch, SetStateAction, useEffect, useRef } from "react"
 
@@ -9,7 +9,7 @@ export default function HomeWrapper({
   games,
   setPage,
 }: {
-  games: RawgGame[]
+  games: Game[]
   setPage: Dispatch<SetStateAction<number>>
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null)

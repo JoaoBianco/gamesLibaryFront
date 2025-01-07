@@ -1,4 +1,4 @@
-export interface RawgGame {
+export interface Game {
   id: number
   slug: string
   name: string
@@ -29,13 +29,14 @@ export interface RawgGame {
   tags: Tag[]
   detail?: string
   redirect?: boolean
+  libaryGame?: LibaryGame
 }
 
 export interface RawgGamesList {
   count: number
   next?: string
   previous?: string
-  results: RawgGame[]
+  results: Game[]
 }
 
 interface Rating {
@@ -127,11 +128,11 @@ const Status = {
 
 type Status = (typeof Status)[keyof typeof Status]
 
-export interface Game {
+export interface LibaryGame {
   id: string
   rawgId: number
   name: string
-  imageUrl: string
+  background_image: string
   wishlist: boolean
   favorite: boolean
   acquired: boolean

@@ -1,10 +1,10 @@
 "use client"
 
-import { RawgGame } from "@/app/shared/models/game.model"
+import { Game } from "@/app/shared/models/game.model"
 import Image from "next/image"
 import Link from "next/link"
 
-type Props = { game: RawgGame }
+type Props = { game: Game }
 
 export default function GameCard({ game }: Props) {
   return (
@@ -13,7 +13,7 @@ export default function GameCard({ game }: Props) {
       href={`/game/${game.id}`}
     >
       <Image
-        src={game.background_image}
+        src={game.libaryGame?.background_image || game.background_image}
         alt={game.name}
         width={800}
         height={350}

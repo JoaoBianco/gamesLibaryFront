@@ -1,7 +1,7 @@
 "use client"
 
 import Spinner from "@/app/(components)/spinner/Spinner"
-import { RawgGame } from "@/app/shared/models/game.model"
+import { Game as FetchedGame } from "@/app/shared/models/game.model"
 import metacriticImg from "@/public/metacritic.png"
 import switchImg from "@/public/switch.png"
 import {
@@ -31,7 +31,7 @@ export default function Game() {
   let id = useParams().id
   const router = useRouter()
 
-  const [game, setGame] = useState<RawgGame>()
+  const [game, setGame] = useState<FetchedGame>()
   const [plataforms, setPlataforms] = useState<Plataform[]>([])
 
   useEffect(() => {
@@ -39,15 +39,12 @@ export default function Game() {
       router.push("/")
       return
     }
-
-    if (typeof id === "string") {
-      fetch(`http://localhost:3000/api/game/${id}`).then((game) => {
-        game.json().then((game) => fetchGameInfos(game.rawgId))
+    fetch(`http://localhost:3000/api/game/${id}`).then((game) => {
+      game.json().then((game) => {
+        setGame(game)
       })
-      return
-    }
-
-    fetchGameInfos(Number(id))
+    })
+    return
   }, [id])
 
   useEffect(() => {
@@ -113,7 +110,7 @@ export default function Game() {
       <div className="relative">
         <div
           className="absolute z-[2] top-0 left-0 cursor-pointer p-4 bg-black/30 rounded-br-lg hover:shadow-md transition-shadow"
-          onClick={() => router.push("/")}
+          onClick={() => router.back()}
         >
           <FontAwesomeIcon
             className="text-white rounded-full"

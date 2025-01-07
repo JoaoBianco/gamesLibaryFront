@@ -4,6 +4,7 @@ import { RawgGamesList } from "@/app/shared/models/game.model"
 import { uniqBy } from "lodash"
 import { useEffect, useState } from "react"
 import Spinner from "../(components)/spinner/Spinner"
+import HomeLayout from "../shared/components/HomeLayout"
 import HomeWrapper from "./(components)/HomeWrapper"
 
 export default function Home() {
@@ -52,11 +53,11 @@ export default function Home() {
   }
 
   return (
-    <>
+    <HomeLayout>
       {allGames?.results && (
         <HomeWrapper games={allGames.results} setPage={setPage} />
       )}
       {loading && <Spinner />}
-    </>
+    </HomeLayout>
   )
 }
