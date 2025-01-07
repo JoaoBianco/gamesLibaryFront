@@ -29,7 +29,7 @@ export interface Game {
   tags: Tag[]
   detail?: string
   redirect?: boolean
-  libaryGame?: LibaryGame
+  libraryGame?: LibraryGame
 }
 
 export interface RawgGamesList {
@@ -128,7 +128,7 @@ const Status = {
 
 type Status = (typeof Status)[keyof typeof Status]
 
-export interface LibaryGame {
+export interface LibraryGame {
   id: string
   rawgId: number
   name: string
