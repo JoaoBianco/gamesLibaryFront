@@ -1,6 +1,6 @@
 "use client"
 
-import { Game } from "@/app/shared/models/game.model"
+import { Game } from "@/app/(shared)/models/game.model"
 import Image from "next/image"
 import Link from "next/link"
 import CardMenu from "./CardMenu"

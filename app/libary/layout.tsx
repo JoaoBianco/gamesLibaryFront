@@ -1,4 +1,4 @@
-import HomeLayout from "../shared/components/HomeLayout"
+import HomeLayout from "../(shared)/components/HomeLayout"
 
 export default function Layout({
   children,

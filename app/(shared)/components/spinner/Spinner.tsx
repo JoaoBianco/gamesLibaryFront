@@ -1,4 +1,4 @@
-import "../spinner/spinner.scss"
+import "./spinner.scss"
 
 export default function Spinner() {
   return (

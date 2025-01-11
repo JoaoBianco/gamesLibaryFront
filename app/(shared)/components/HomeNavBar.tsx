@@ -11,9 +11,9 @@ export default function HomeNavBar() {
       </Link>
       <Link
         className="p-2 border-2 rounded-md hover:shadow-sm transition-shadow"
-        href={"/libary"}
+        href={"/libraryGame"}
       >
-        Libary
+        Library
       </Link>
     </div>
   )

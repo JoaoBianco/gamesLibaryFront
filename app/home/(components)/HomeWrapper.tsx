@@ -1,7 +1,7 @@
 "use client"
 
+import { Game } from "@/app/(shared)/models/game.model"
 import GameCard from "@/app/game/(components)/GameCard"
-import { Game } from "@/app/shared/models/game.model"
 import { debounce } from "lodash"
 import { Dispatch, SetStateAction, useEffect, useRef } from "react"
 

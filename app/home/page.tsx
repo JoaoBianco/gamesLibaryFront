@@ -1,10 +1,11 @@
 "use client"
 
-import { RawgGamesList } from "@/app/shared/models/game.model"
+import { RawgGamesList } from "@/app/(shared)/models/game.model"
 import { uniqBy } from "lodash"
 import { useEffect, useState } from "react"
-import Spinner from "../(components)/spinner/Spinner"
-import HomeLayout from "../shared/components/HomeLayout"
+import HomeLayout from "../(shared)/components/HomeLayout"
+import HomeGameSkeleton from "../(shared)/components/skeletons/HomeGameSkeleton"
+import Spinner from "../(shared)/components/spinner/Spinner"
 import HomeWrapper from "./(components)/HomeWrapper"
 
 export default function Home() {
@@ -54,6 +55,13 @@ export default function Home() {
 
   return (
     <HomeLayout>
+      {loading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 overflow-auto">
+          {Array.from({ length: 30 }).map((_, index) => (
+            <HomeGameSkeleton key={index} />
+          ))}
+        </div>
+      )}
       {allGames?.results && (
         <HomeWrapper games={allGames.results} setPage={setPage} />
       )}

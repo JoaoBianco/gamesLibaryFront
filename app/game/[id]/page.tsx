@@ -1,7 +1,6 @@
 "use client"
 
-import Spinner from "@/app/(components)/spinner/Spinner"
-import { Game as FetchedGame } from "@/app/shared/models/game.model"
+import { Game as FetchedGame } from "@/app/(shared)/models/game.model"
 import metacriticImg from "@/public/metacritic.png"
 import switchImg from "@/public/switch.png"
 import {
@@ -10,7 +9,6 @@ import {
   faXbox,
 } from "@fortawesome/free-brands-svg-icons"
 import {
-  faCircleArrowLeft,
   faGamepad,
   faStar,
   IconDefinition,
@@ -21,6 +19,8 @@ import parse from "html-react-parser"
 import Image, { StaticImageData } from "next/image"
 import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import CardMenu from "../(components)/CardMenu"
+import Spinner from "../../(shared)/components/spinner/Spinner"
 
 type Plataform = {
   name: string
@@ -39,11 +39,7 @@ export default function Game() {
       router.push("/")
       return
     }
-    fetch(`http://localhost:3000/api/game/${id}`).then((game) => {
-      game.json().then((game) => {
-        setGame(game)
-      })
-    })
+    fetchGameInfos(id.toString())
     return
   }, [id])
 
@@ -51,7 +47,7 @@ export default function Game() {
     buildPlataforms()
   }, [game])
 
-  function fetchGameInfos(id: number) {
+  function fetchGameInfos(id: number | string) {
     fetch(`http://localhost:3000/api/rawgGames/${id}`).then((game) => {
       game.json().then((game) => setGame(game))
     })
@@ -108,16 +104,7 @@ export default function Game() {
   return (
     <>
       <div className="relative">
-        <div
-          className="absolute z-[2] top-0 left-0 cursor-pointer p-4 bg-black/30 rounded-br-lg hover:shadow-md transition-shadow"
-          onClick={() => router.back()}
-        >
-          <FontAwesomeIcon
-            className="text-white rounded-full"
-            size="2x"
-            icon={faCircleArrowLeft}
-          />
-        </div>
+        <CardMenu game={game} showBackButton={true} />
         <Image
           src={game.background_image}
           alt={game.name}

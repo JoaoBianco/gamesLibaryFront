@@ -21,6 +21,7 @@
     "npm": "^10.9.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-tooltip": "^5.28.0",
     "sass": "^1.83.1"
   },
   "devDependencies": {
