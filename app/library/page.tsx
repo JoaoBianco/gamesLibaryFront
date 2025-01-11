@@ -3,7 +3,7 @@ import GameCard from "../game/(components)/GameCard"
 
 export default async function page() {
   const games: Game[] = await fetch(
-    "http://localhost:3000/api/games?Library=true"
+    "http://localhost:3000/api/games?onlyLibrary=true"
   ).then((games) => games.json())
 
   if (!games || !games.length) {

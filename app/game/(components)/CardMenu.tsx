@@ -72,6 +72,7 @@ export default function CardMenu({
         <FontAwesomeIcon
           className="text-white rounded-full mr-auto cursor-pointer focus-within:outline-none focus-within:shadow-md hover:shadow-md"
           icon={faCircleArrowLeft}
+          size="sm"
           onClick={() => router.back()}
         />
       )}
@@ -83,6 +84,7 @@ export default function CardMenu({
             icon={localGame.libraryGame?.acquired ? moneySolid : moneyRegular}
             color="white"
             onClick={() => toggleItem("acquired")}
+            size="sm"
             className="cursor-pointer focus-within:outline-none focus-within:shadow-md hover:shadow-md"
           />
           <FontAwesomeIcon
@@ -91,6 +93,7 @@ export default function CardMenu({
             icon={localGame.libraryGame?.favorite ? heartSolid : heartRegular}
             color="white"
             onClick={() => toggleItem("favorite")}
+            size="sm"
             className="cursor-pointer focus-within:outline-none focus-within:shadow-md hover:shadow-md"
           />
         </>
@@ -101,6 +104,7 @@ export default function CardMenu({
         icon={localGame.libraryGame?.wishlist ? bellSolid : bellRegular}
         color="white"
         onClick={() => toggleItem("wishlist")}
+        size="sm"
         className="cursor-pointer focus-within:outline-none focus-within:shadow-md hover:shadow-md"
       />
       <FontAwesomeIcon
@@ -111,6 +115,7 @@ export default function CardMenu({
         }
         color="white"
         onClick={() => toggleItem("library")}
+        size="sm"
         className="cursor-pointer focus-within:outline-none focus-within:shadow-md hover:shadow-md"
       />
       <Tooltip id="card-menu-tooltip" content={tooltipInfos.contet} />

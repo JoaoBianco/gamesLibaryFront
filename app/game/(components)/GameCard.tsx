@@ -11,10 +11,13 @@ export default function GameCard({ game }: Props) {
   return (
     <div className="relative rounded-md h-[350px] overflow-hidden shadow-sm shadow-gray-600 cursor-pointer">
       <CardMenu game={game} />
-      <Link className="relative" href={`/game/${game.id}`}>
+      <Link
+        className="relative"
+        href={`/game/${game?.id || game.libraryGame?.id}`}
+      >
         <Image
           src={game.libraryGame?.background_image || game.background_image}
-          alt={game.name}
+          alt={game?.name || game.libraryGame?.name || "Game"}
           width={800}
           height={350}
           className="rounded-md h-full w-full object-cover"

@@ -48,7 +48,7 @@ export default function Game() {
   }, [game])
 
   function fetchGameInfos(id: number | string) {
-    fetch(`http://localhost:3000/api/rawgGames/${id}`).then((game) => {
+    fetch(`http://localhost:3000/api/game/${id}`).then((game) => {
       game.json().then((game) => setGame(game))
     })
   }
@@ -96,8 +96,9 @@ export default function Game() {
       isImage: platform?.isImage || false,
     }
   }
+  console.log(game)
 
-  if (!game) {
+  if (!game || !game.id) {
     return <Spinner />
   }
 
@@ -161,7 +162,7 @@ export default function Game() {
             })}
           </div>
         </div>
-        <p>{parse(game.description)}</p>
+        <div>{parse(game?.description || "")}</div>
       </div>
     </>
   )

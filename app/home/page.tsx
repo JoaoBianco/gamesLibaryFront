@@ -43,7 +43,6 @@ export default function Home() {
         }
       )
     } catch (err) {
-      console.log(err)
       setError(true)
     }
     setLoading(false)
