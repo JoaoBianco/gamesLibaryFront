@@ -13,7 +13,7 @@ export default async function page() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 overflow-auto">
       {games.map((game) => (
-        <GameCard key={game.id} game={game} />
+        <GameCard key={game.libraryGame?.id || game.id} game={game} />
       ))}
     </div>
   )

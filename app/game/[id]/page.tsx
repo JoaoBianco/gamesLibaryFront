@@ -1,70 +1,47 @@
-"use client"
-
-import { Game as FetchedGame } from "@/app/(shared)/models/game.model"
-import metacriticImg from "@/public/metacritic.png"
 import switchImg from "@/public/switch.png"
 import {
   faPlaystation,
   faWindows,
   faXbox,
 } from "@fortawesome/free-brands-svg-icons"
-import {
-  faGamepad,
-  faStar,
-  IconDefinition,
-} from "@fortawesome/free-solid-svg-icons"
-import { faCalendar } from "@fortawesome/free-solid-svg-icons/faCalendar"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import parse from "html-react-parser"
-import Image, { StaticImageData } from "next/image"
-import { useParams, useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
-import CardMenu from "../(components)/CardMenu"
-import Spinner from "../../(shared)/components/spinner/Spinner"
+import { faGamepad, IconDefinition } from "@fortawesome/free-solid-svg-icons"
+import { StaticImageData } from "next/image"
+import { redirect } from "next/navigation"
+import GamePage from "./(components)/Game"
 
-type Plataform = {
+export type Plataform = {
   name: string
   icon: { icon: IconDefinition | StaticImageData; isImage: boolean }
 }
 
-export default function Game() {
-  let id = useParams().id
-  const router = useRouter()
+export default async function Game({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}) {
+  const id = (await params).id
 
-  const [game, setGame] = useState<FetchedGame>()
-  const [plataforms, setPlataforms] = useState<Plataform[]>([])
-
-  useEffect(() => {
-    if (!id) {
-      router.push("/")
-      return
-    }
-    fetchGameInfos(id.toString())
-    return
-  }, [id])
-
-  useEffect(() => {
-    buildPlataforms()
-  }, [game])
-
-  function fetchGameInfos(id: number | string) {
-    fetch(`http://localhost:3000/api/game/${id}`).then((game) => {
-      game.json().then((game) => setGame(game))
-    })
+  if (!id) {
+    redirect("/")
   }
+
+  const game = await fetch(`http://localhost:3000/api/game/${id}`).then(
+    (game) => game.json()
+  )
+
+  const platforms = buildPlataforms()
 
   function buildPlataforms() {
     if (!game) {
       return
     }
 
-    const plataforms: Plataform[] = game.parent_platforms.map((platform) => {
+    return game.parent_platforms.map((platform: { platform: Plataform }) => {
       return {
         name: platform.platform.name,
         icon: getIconPlataform(platform.platform.name),
       }
     })
-    setPlataforms(plataforms)
   }
 
   function getIconPlataform(plataform: string): {
@@ -96,74 +73,6 @@ export default function Game() {
       isImage: platform?.isImage || false,
     }
   }
-  console.log(game)
 
-  if (!game || !game.id) {
-    return <Spinner />
-  }
-
-  return (
-    <>
-      <div className="relative">
-        <CardMenu game={game} showBackButton={true} />
-        <Image
-          src={game.background_image}
-          alt={game.name}
-          width={1200}
-          height={800}
-          className="w-full object-cover object-top h-[400px]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-black/10" />
-      </div>
-      <div className="grid gap-2 p-4">
-        <h3 className="text-center text-[2rem]">{game.name}</h3>
-        <div className="grid gap-2">
-          <div className="flex gap-2 items-center justify-center">
-            <div className="flex gap-2 items-center shadow-sm border-2 border-gray-300 p-2 rounded-md">
-              <FontAwesomeIcon icon={faCalendar} /> <span>{game.released}</span>
-            </div>
-            <div className="flex gap-2 items-center shadow-sm border-2 border-gray-300 p-2 rounded-md">
-              <Image
-                src={metacriticImg}
-                alt="Metacritic"
-                width={16}
-                height={16}
-                className="rounded-lg"
-              />
-              <span>{game.metacritic}</span>
-            </div>
-            <div className="flex gap-2 items-center shadow-sm border-2 border-gray-300 p-2 rounded-md">
-              <FontAwesomeIcon icon={faStar} /> <span>{game.rating}</span>
-            </div>
-          </div>
-          <div className="flex gap-2 items-center justify-center">
-            {plataforms?.map((plataform) => {
-              return (
-                <div
-                  key={plataform.name}
-                  className="flex gap-2 items-center shadow-sm border-2 border-gray-300 p-2 rounded-md"
-                >
-                  {!plataform.icon.isImage ? (
-                    <FontAwesomeIcon
-                      icon={plataform.icon.icon as IconDefinition}
-                    />
-                  ) : (
-                    <Image
-                      src={plataform.icon.icon as StaticImageData}
-                      alt={plataform.name}
-                      width={16}
-                      height={16}
-                      className="rounded-sm"
-                    />
-                  )}
-                  <span>{plataform.name}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-        <div>{parse(game?.description || "")}</div>
-      </div>
-    </>
-  )
+  return <GamePage game={game} platforms={platforms} />
 }
